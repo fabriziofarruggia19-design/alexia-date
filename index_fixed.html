@@ -1,0 +1,47 @@
+
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pentru Alexia</title>
+<style>
+body{margin:0;font-family:Arial;background:linear-gradient(135deg,#7ec8ff,#dff4ff);display:flex;align-items:center;justify-content:center;height:100vh}
+.card{background:#fff;padding:28px;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.2);width:min(92%,420px);text-align:center}
+.hidden{display:none}button{padding:12px 20px;border:none;border-radius:12px;margin:8px;cursor:pointer}
+#yes,#next,#finish,#next1{background:#3498db;color:#fff}#no{background:#eee;position:relative}
+label{display:block;text-align:left;margin:8px 0}
+</style></head><body>
+<div class="card">
+<div id=s1><h2>Salut, Alexia 💙</h2><p>Fabrizio are o întrebare...</p><button id=next1>Începe ✨</button></div>
+<div id=s2 class=hidden><h2>Vrei să ieși cu mine la un date? 🥺</h2><button id=yes>Da ❤️</button><button id=no>Nu</button></div>
+<div id=s3 class=hidden><h2>Ce dată ți-ar plăcea?</h2><input id=date type=date><br><br><button id=next>Continuă</button></div>
+<div id=s4 class=hidden><h2>Ce ai vrea să facem?</h2>
+<label><input type=checkbox value="🍕 Să mâncăm"> Să mâncăm împreună</label>
+<label><input type=checkbox value="🚶 Să ne plimbăm"> Să ne plimbăm</label>
+<label><input type=checkbox value="🎬 Film"> Film</label>
+<button id=finish>Finalizează</button></div>
+<div id=s5 class=hidden><h2>🎉 Super!</h2><p id=summary></p><b>— Fabrizio ❤️</b></div>
+</div>
+<script>
+function show(id){
+["s1","s2","s3","s4","s5"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+document.getElementById(id).classList.remove("hidden");
+}
+document.getElementById("next1").onclick=()=>show("s2");
+document.getElementById("yes").onclick=()=>show("s3");
+document.getElementById("next").onclick=()=>show("s4");
+document.getElementById("finish").onclick=()=>{
+const d=document.getElementById("date").value||"o dată aleasă de tine";
+const acts=[...document.querySelectorAll('input[type=checkbox]:checked')].map(e=>e.value).join(", ")||"o surpriză";
+document.getElementById("summary").innerHTML="📅 "+d+"<br>💙 "+acts;
+show("s5");
+};
+const no=document.getElementById("no");
+document.addEventListener("mousemove",e=>{
+if(document.getElementById("s2").classList.contains("hidden")) return;
+const r=no.getBoundingClientRect();
+const dist=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2));
+if(dist<90){
+no.style.position="fixed";
+no.style.left=Math.random()*(window.innerWidth-100)+"px";
+no.style.top=Math.random()*(window.innerHeight-50)+"px";
+}
+});
+</script></body></html>
